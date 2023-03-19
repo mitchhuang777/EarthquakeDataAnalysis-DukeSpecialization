@@ -74,6 +74,7 @@ read data for 25 quakes
 475.94878125 Quarry Blast - 4km WNW of Grand Terrace, California
 Found 7 quakes that match that criteria
 ```
+> `EarthQuakeClient.java`
 
 ## Assignment 2: Filtering by Depth
 In this assignment you will filter earthquakes by their depth, finding those earthquakes whose depth is between a minimum and maximum value. For more information on what the "depth" of an earthquake means, see the information here: http://earthquake.usgs.gov/learn/topics/seismology/determining_depth.php 
@@ -93,6 +94,8 @@ Find quakes with depth between -10000.0 and -5000.0
 (37.00, -116.94), mag = -0.10, depth = -6700.00, title = 18km WNW of Beatty, Nevada
 Found 5 quakes that match that criteria
 ```
+
+> `EarthQuakeClient.java`
 
 ## Assignment 3: Filtering by Phrase in Title
 In this assignment you will filter earthquakes by a phrase in the title given for the earthquake in three ways, finding those earthquakes whose title starts with a phrase, ends with a phrase, or just has a phrase somewhere in the title.
@@ -130,6 +133,8 @@ read data for 25 quakes
 Found 2 quakes that match Explosion at start
 ```
 
+> `EarthQuakeClient.java`
+
 ## Assignment 4: Finding the Closest Earthquakes to a Location
 In this assignment you will complete the program to determine the N closests earthquakes to a specified location that was described in this lesson in the video. 
 
@@ -146,6 +151,8 @@ read data for 25
 5289.10 (26.38, 142.71), mag = 5.50, depth = -12890.00, title = 91km SSE of Chichi-shima, Japan
 number found: 3
 ```
+
+> `ClosestQuakes.java`
 
 ## Assignment 5: Finding the Largest Magnitude Earthquakes
 In this assignment you will write a new class and methods to determine the N biggest earthquakes, those with largest magnitude.
@@ -165,3 +172,5 @@ Specifically, for this assignment, you will:
 (8.53, -71.34), mag = 5.00, depth = -25160.00, title = 5km ENE of Lagunillas, Venezuela
 (40.37, 73.20), mag = 4.90, depth = -40790.00, title = 21km WNW of Gul'cha, Kyrgyzstan
 ```
+
+> `LargestQuakes.java`
