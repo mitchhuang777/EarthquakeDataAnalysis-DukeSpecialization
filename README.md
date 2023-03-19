@@ -1,4 +1,4 @@
-# EarthquakeDataAnalysis-DukeSpecialization
+# Welcome to the Course
 Welcome to “Java Programming: Principles of Software Design”! We are excited that you are starting our course to learn how to write programs in Java, one of the most popular programming languages in the world. In this introductory module, you will hear an overview of this course and be introduced to the supporting resources available.
 ***
 
@@ -263,3 +263,214 @@ Filters used are: Magnitude Depth Phrase
 > `EarthQuakeClient2.java`
 
 > `Filter.java`
+
+***
+
+## Earthquakes: Sorting Algorithms
+
+In this module, you will continue using real earthquake data to explore several sorting algorithms. You will learn how to implement a selection sort and a bubble sort, then be introduced to a Java method Collections.sort, which sorts with much greater efficiency. By the end of this module, you will be able to (1) implement several sorting algorithms from scratch, (2) use efficient pre-existing sorting classes, (3) modify a class’s compareTo method to choose the criteria by which objects of that type are ordered, and (4) write classes that implement the Comparator interface to create interchangeable sorting criteria.
+
+## Programming Exercise: Implementing Selection Sort
+
+For the following assignments, you will start with the files provided, using most of the classes, and modifying only one of them.  
+
+First there are several classes provided from the previous lesson that are unchanged:
+
++ The class Location, from the Android platform and revised for this course, a data class representing a geographic location. One of the constructors has parameters latitude and longitude, and one of the public methods is distanceTo.
++ The class QuakeEntry, from the lesson, which has a constructor that requires latitude, longitude, magnitude, title, and depth. It has several get methods and a toString method.
++ The class EarthQuakeParser, from the lesson, which has a read method with one String parameter that represents an XML earthquake data file and returns an ArrayList of QuakeEntry objects.
+
+There are several new classes: 
+
++ The QuakeSortWithTwoArrayLists class includes code shown in the video “Translating to Code” on how to sort using two ArrayLists of QuakeEntry’s. You should run the testSort method and understand how this sorting algorithm works. 
++ The QuakeSortInPlace class is the class you will modify. Currently it implements the selection sort algorithm that sorts earthquakes by magnitude in place, in one ArrayList of QuakeEntry’s. The code for the method sortByMagnitude was shown in the video “In Place.” You should run the testSort method and understand how this sorting algorithm works. 
+
+> `QuakeSortWithTwoArrayLists.java`
+
+## Assignment 1: Sort by Depth
+
+In this assignment, you will add methods in the QuakeSortInPlace class to sort the quakes by depth, from largest depth to smallest depth. This will mean any positive depth values will be first, followed by depths with increasingly negative values, e.g., 200.00, 0.00, -20000.00, -100000.00.
+
+Specifically, for this assignment, you will modify the QuakeSortInPlace class:
+
++ Write the method getLargestDepth that has two parameters, an ArrayList of type QuakeEntry named quakeData and an int named from representing an index position in the ArrayList. This method returns an integer representing the index position of the QuakeEntry with the largest depth considering only those QuakeEntry’s from position from to the end of the ArrayList. 
++ Write the void method sortByLargestDepth that has one parameter, an ArrayList of type QuakeEntry named in. This method sorts the QuakeEntry’s in the ArrayList by depth using the selection sort algorithm, but in reverse order from largest depth to smallest depth (the QuakeEntry with the largest depth should be in the 0th position in the ArrayList). This method should call the method getLargestDepth repeatedly until the ArrayList is sorted. 
++ Modify the testSort method to comment out the line sortByMagnitude and add below this line a call to sortByLargestDepth. Run your program on any data file and you should see the earthquakes in sorted order from largest depth to smallest depth> ``
+
+> `QuakeSortInPlace.java`
+
+## Assignment 2: Bubble Sort
+
+For this assignment, you will implement the bubble sort algorithm, which also sorts the data in an ArrayList in place. Bubble sort sorts using several passes. One pass over the ArrayList compares adjacent elements and swaps them if they are out of order. For example, if we want to sort the numbers:
+
+4  7  3  8  1
+
+One pass would compare the first two elements in the ArrayList, 4 and 7.  They are in order, so there is no swap. Then the second and third elements are compared, 7 and 3, they are out of order, so they would be swapped, resulting in:  
+
+4  3  7  8  1
+
+The next two adjacent elements are compared, the third and fourth elements, 7 and 8. They are in order, so there is no swap. The next two adjacent elements are 8 and 1. They are out of order, so they are swapped, resulting in: 
+
+4  3  7  1  8
+
+The pass is complete. Notice that as a result of the pass, the largest element in the ArrayList, which is larger than any other element, is “bubbled” down and is the last item in the ArrayList, where it belongs in the final sorted order. 
+
+After a second pass, the elements in the ArrayList should be in the order:
+
+3  4  1  7  8 
+
+Notice now that the last two elements, the largest two, should be where they belong in the final sorted order. 
+
+The bubble sort algorithm works as follows. If there are N elements in the ArrayList. Apply N-1 passes, and the ArrayList should be sorted. Notice that with each pass, there is one more element where it belongs in the final sorted order. Thus each pass can look at one fewer element than the previous pass.
+
+Specifically, for this assignment, you will modify the QuakeSortInPlace class:
+
++ Write the void method onePassBubbleSort that has two parameters, an ArrayList of type QuakeEntry named quakeData and an int named numSorted that represents the number of times this method has already been called on this ArrayList and thus also represents the number of the elements that are guaranteed to already be where they belong when the ArrayList is sorted by magnitude. This method makes one pass of bubble sort on the ArrayList. It should take advantage of the fact that the last numSorted elements are already in sorted order. 
++ Write the void method sortByMagnitudeWithBubbleSort that has one parameter, an ArrayList of type QuakeEntry named in. If the ArrayList in has N elements in it, this method should call onePassBubbleSort N – 1 times to sort the elements in in.  
++ Modify the testSort method to comment out the line sortByLargestDepth, and add below this line a call to sortByMagnitudeWithBubbleSort. Run your program on any data file and you should see the earthquakes in sorted order from smallest to largest magnitude. 
++ Are you convinced your program is working correctly? Let’s add more output and test it on a small file. Add code to sortByMagnitudeWithBubbleSort to print all the quakes before a pass, and then to print all the quakes after each pass, identifying the pass. Since there will be a lot of data, you’ll only want to run your program on a small file. Once you are sure it works, you probably want to then comment out the print statements. Run your program on the file earthquakeDataSampleSix2.atom, which has data on only five earthquakes. You should get the following output. Focusing on the magnitude, after pass 0 (the first pass) the quake with magnitude 4.80 is last, after pass 1 the quake with magnitude 2.60 is where it belongs. Note that pass 3 wasn’t needed as the quakes were already in sorted order. That might happen sometimes.
+
+Output:
+
+```
+read data for 5 quakes
+(-23.27, -67.66), mag = 4.80, depth = -175320.00, title = 69km SE of San Pedro de Atacama, Chile
+(35.68, -118.10), mag = 1.50, depth = -8280.00, title = 27km W of Inyokern, California
+(36.22, -117.89), mag = 2.60, depth = -1450.00, title = 12km ESE of Olancha, California
+(36.95, -121.57), mag = 1.00, depth = -8660.00, title = 6km S of Gilroy, California
+(38.82, -122.77), mag = 1.40, depth = -1300.00, title = 3km W of Cobb, California
+Printing Quakes after pass 0
+(35.68, -118.10), mag = 1.50, depth = -8280.00, title = 27km W of Inyokern, California
+(36.22, -117.89), mag = 2.60, depth = -1450.00, title = 12km ESE of Olancha, California
+(36.95, -121.57), mag = 1.00, depth = -8660.00, title = 6km S of Gilroy, California
+(38.82, -122.77), mag = 1.40, depth = -1300.00, title = 3km W of Cobb, California
+(-23.27, -67.66), mag = 4.80, depth = -175320.00, title = 69km SE of San Pedro de Atacama, Chile
+Printing Quakes after pass 1
+(35.68, -118.10), mag = 1.50, depth = -8280.00, title = 27km W of Inyokern, California
+(36.95, -121.57), mag = 1.00, depth = -8660.00, title = 6km S of Gilroy, California
+(38.82, -122.77), mag = 1.40, depth = -1300.00, title = 3km W of Cobb, California
+(36.22, -117.89), mag = 2.60, depth = -1450.00, title = 12km ESE of Olancha, California
+(-23.27, -67.66), mag = 4.80, depth = -175320.00, title = 69km SE of San Pedro de Atacama, Chile
+Printing Quakes after pass 2
+(36.95, -121.57), mag = 1.00, depth = -8660.00, title = 6km S of Gilroy, California
+(38.82, -122.77), mag = 1.40, depth = -1300.00, title = 3km W of Cobb, California
+(35.68, -118.10), mag = 1.50, depth = -8280.00, title = 27km W of Inyokern, California
+(36.22, -117.89), mag = 2.60, depth = -1450.00, title = 12km ESE of Olancha, California
+(-23.27, -67.66), mag = 4.80, depth = -175320.00, title = 69km SE of San Pedro de Atacama, Chile
+Printing Quakes after pass 3
+(36.95, -121.57), mag = 1.00, depth = -8660.00, title = 6km S of Gilroy, California
+(38.82, -122.77), mag = 1.40, depth = -1300.00, title = 3km W of Cobb, California
+(35.68, -118.10), mag = 1.50, depth = -8280.00, title = 27km W of Inyokern, California
+(36.22, -117.89), mag = 2.60, depth = -1450.00, title = 12km ESE of Olancha, California
+(-23.27, -67.66), mag = 4.80, depth = -175320.00, title = 69km SE of San Pedro de Atacama, Chile
+EarthQuakes in sorted order:
+(36.95, -121.57), mag = 1.00, depth = -8660.00, title = 6km S of Gilroy, California
+(38.82, -122.77), mag = 1.40, depth = -1300.00, title = 3km W of Cobb, California
+(35.68, -118.10), mag = 1.50, depth = -8280.00, title = 27km W of Inyokern, California
+(36.22, -117.89), mag = 2.60, depth = -1450.00, title = 12km ESE of Olancha, California
+(-23.27, -67.66), mag = 4.80, depth = -175320.00, title = 69km SE of San Pedro de Atacama, Chile
+```
+
+> `QuakeSortInPlace.java`
+
+## Assignment 3: Check for Completion
+
+For this assignment, we will explore the idea that the data might be sorted before all the passes are complete. We want to write a method to determine whether a list is already sorted and then use that method to end our sorting algorithms early if earthquakes are sorted early.
+
+Specifically, for this assignment, you will modify the QuakeSortInPlace class:
+
++ Write the method checkInSortedOrder that has one parameter, an ArrayList of type QuakeEntry named quakes. This method returns true if the earthquakes are in sorted order by magnitude from smallest to largest. Otherwise this methods returns false. You’ll need to loop through the ArrayList and check adjacent earthquakes to see if any are out of order. 
++ Write the void method sortByMagnitudeWithBubbleSortWithCheck that has one parameter, an ArrayList of type QuakeEntry named in. If the ArrayList in has N elements in it, this method should call onePassBubbleSort at most N – 1 times.  This method should call checkInSortedOrder and stop early if the ArrayList is already sorted. This method should print how many passes were needed to sort the elements. 
++ Modify the testSort method to call to sortByMagnitudeWithBubbleSortWithCheck. Run your program on any data files earthquakeDataSampleSix1.atom (should sort after 2 passes) and earthquakeDataSampleSix2.atom (should sort after 3 passes). Both of these files have five earthquakes.  
++ Write the void method sortByMagnitudeWithCheck that has one parameter, an ArrayList of type QuakeEntry named in. This method sorts earthquakes by their magnitude from smallest to largest using selection sort similar to the sortByMagnitude method. However, this method should call checkInSortedOrder and stop early if the ArrayList is already sorted. This method should print how many passes were needed to sort the elements. For selection sort, one pass has exactly one swap. 
++ Modify the testSort method to call to sortByMagnitudeWithCheck. Run your program on any data files earthquakeDataSampleSix1.atom (should sort after 3 passes) and earthquakeDataSampleSix2.atom (should sort after 4 passes). Both of these files have five earthquakes.  
+
+> `QuakeSortInPlace.java`
+
+***
+
+## Programming Exercise: Sorting at Scale
+
+For the following assignments, you will start with the files provided, using most of the classes, and modifying only a few of them.  
+
+First there are several classes provided from the previous lesson that are unchanged:
+
++ The class Location, from the Android platform and revised for this course, a data class representing a geographic location. One of the constructors has parameters latitude and longitude, and one of the public methods is distanceTo.
++ The class QuakeEntry, from the lesson, which has a constructor that requires latitude, longitude, magnitude, title, and depth. It has several get methods and a toString method. It also has a compareTo method to sort earthquakes by magnitude (and commented out code that previously sorted earthquakes by distance to a location). You will be modifying the compareTo method in the first assignment. 
++ The class EarthQuakeParser, from the lesson, which has a read method with one String parameter that represents an XML earthquake data file and returns an ArrayList of QuakeEntry objects.
+
+There are several new classes
+
++ The DifferentSorters class includes several methods that are similar to code shown in the videos to test several of the classes/methods in this assignment. You’ll be adding additional tester methods to this class.  
++ The MagnitudeComparator class implements Comparator to allow one to sort QuakeEntry’s by magnitude from smallest to largest magnitude. This method was mentioned in a video.
++ The DistanceComparator class implements Comparator to allow one to sort QuakeEntry’s by their distance to a specified location that is passed in as a parameter. This method was also mentioned in a video. 
+
+> `MagnitudeComparator.java`
+
+> `DistanceComparator.java`
+
+## Assignment 1: compareTo Method
+
+In this assignment, you will modify the **compareTo** method to sort quakes in a different way.
+
+Specifically, for this assignment, you will: 
+
++ Modify the **compareTo** method in the QuakeEntry class. (You may want to comment out the current code first). The **compareTo** method should now sort quake by magnitude first, from smallest magnitude to largest magnitude, and then break ties (use == operator to determine whether magnitudes are equal) by depth, from smallest (most negative) depth to largest depth.
++ Test the **compareTo** method by running the **sortWithCompareTo** method in the DifferentSorters class with any data file. The sort used is **Collections.sort**. You should be able to see that the earthquakes are sorted by magnitude, and those with the same magnitude are sorted by depth. Modify this method to print out the QuakeEntry in the ArrayList in position 10 (which is actually the 11th element in the ArrayList) by adding the following code at the end of this method, after sorting and printing out all the elements.
+
+```
+int quakeNumber = 10;
+System.out.println("Print quake entry in position " + quakeNumber);
+System.out.println(list.get(quakeNumber));
+```
+
+When you run your method on the file nov20quakedata.atom, the element in position 10 that is printed should be:
+
+```
+(36.75, -116.15), mag = -0.20, depth = -4200.00, title = 57km ESE of Beatty, Nevada
+```
+
+This output has been modified to reflect the updated EarthQuakeParser class, 1/12/16. 
+
+> `QuakeEntry.java`
+
+> `DifferentSorters.java`
+
+## Assignment 2: Title Comparator
+
+In this assignment, you will write a Comparator to sort earthquakes by title first and break ties by depth. 
+
+Specifically, for this assignment, you will: 
+
++ Write the TitleAndDepthComparator class that implements a Comparator of type QuakeEntry. In this class you should write the compare method that has two parameters, a QuakeEntry named q1 and a QuakeEntry named q2. This method should compare the title of q1 and q2. If q1’s title comes before q2’s title in alphabetical order, then this method should return a negative integer. If q1’s title comes after q2’s title, then this method should return a positive integer. If q1’s title is the same as q2’s title, then this method should compare the depth of the two earthquakes. If q1’s depth is less than q2’s depth, then this method should return a negative number. If q1’s depth is greater than q2’s depth, then this method should return a positive integer. Otherwise, this method should return 0. 
++ Write the void method sortByTitleAndDepth in the DifferentSorters class. This method should create an EarthQuakeParser, read data from a file on earthquakes and create an ArrayList of QuakeEntry’s. Then this method should call Collections.sort on this ArrayList and use the TitleAndDepthComparator to sort the earthquakes. You should be able to see that the earthquakes are sorted by title first, and those with the same title are sorted by depth. Modify this method to print out the QuakeEntry in the ArrayList in position 10 (which is actually the 11th element in the ArrayList) after sorting and printing out all the elements.
+
+When you run your method on the file nov20quakedata.atom, the element in position 10 that is printed should be:
+
+```
+(49.76, 155.83), mag = 4.70, depth = -58380.00, title = 104km SSW of Severo-Kuril'sk, Russia
+```
+
+> `TitleAndDepthComparator.java`
+
+> `DifferentSorters.java`
+
+## Assignment 3: Last Word in Title Comparator
+
+In this assignment, you will write a Comparator to sort earthquakes by the last word in their title first and break ties by magnitude. 
+
+Specifically, for this assignment, you will: 
+
++ Write the TitleLastAndMagnitudeComparator class that implements a Comparator of type QuakeEntry. In this class you should write the compare method that has two parameters, a QuakeEntry named q1 and a QuakeEntry named q2. This method should compare the last word in the title of q1 and q2. If q1’s last word comes before q2’s last word in alphabetical order, then this method should return a negative integer. If q1’s last word comes after q2’s last word, then this method should return a positive integer. If q1’s last word is the same as q2’s last word, then this method should compare the magnitude of the two earthquakes. If q1’s magnitude is less than q2’s magnitude, then this method should return a negative number. If q1’s magnitude is greater than q2’s magnitude, then this method should return a positive integer. Otherwise, this method should return 0. 
++ Write the void method sortByLastWordInTitleThenByMagnitude in the DifferentSorters class. This method should create an EarthQuakeParser, read data from a file on earthquakes and create an ArrayList of QuakeEntry’s. Then this method should call Collections.sort on this ArrayList and use the TitleLastAndMagnitudeComparator to sort the earthquakes. You should be able to see that the earthquakes are sorted by the last word in their title, and those with the same last word are sorted by magnitude. Modify this method to print out the QuakeEntry in the ArrayList in position 10 (which is actually the 11th element in the ArrayList) after sorting and printing out all the elements.
+
+When you run your method on the file nov20quakedata.atom, the element in position 10 that is printed should be:
+
+```
+(64.47, -149.48), mag = 0.40, depth = -16300.00, title = 21km WSW of North Nenana, Alaska
+```
+
+> `TitleLastAndMagnitudeComparator.java`
+
+> `DifferentSorters.java`
+
